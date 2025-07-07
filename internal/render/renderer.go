@@ -12,26 +12,34 @@ import (
 var templates = make(map[string]*template.Template)
 
 func LoadTemplates() {
-	layoutUser := "web/templates/layouts/user.html"
-	layoutAdmin := "web/templates/layouts/admin.html"
+	layoutUser := "web/templates/layouts/layout_user.html"
+	layoutAdmin := "web/templates/layouts/layout_admin.html"
 
 	// Load user templates
 	userPages, _ := filepath.Glob("web/templates/pages/user/*.html")
 	for _, page := range userPages {
 		name := filepath.Base(page)
-		tmpl := template.Must(template.ParseFiles(layoutUser, page))
-        templates["user_"+name] = tmpl
+		tmpl, err := template.ParseFiles(layoutUser, page)
+		if err != nil {
+			log.Printf("❌ Lỗi load user template %s: %v\n", page, err)
+			continue
+		}
+		templates["user_"+name] = tmpl
 	}
 
 	// Load admin templates
-    adminPages, _ := filepath.Glob("web/templates/pages/admin/*.html")
-    for _, page := range adminPages {
-        name := filepath.Base(page)
-        tmpl := template.Must(template.ParseFiles(layoutAdmin, page))
-        templates["admin_"+name] = tmpl
-    }
+	adminPages, _ := filepath.Glob("web/templates/pages/admin/*.html")
+	for _, page := range adminPages {
+		name := filepath.Base(page)
+		tmpl, err := template.ParseFiles(layoutAdmin, page)
+		if err != nil {
+			log.Printf("❌ Lỗi load admin template %s: %v\n", page, err)
+			continue
+		}
+		templates["admin_"+name] = tmpl
+	}
 
-    log.Println("✅ Templates loaded")
+	log.Println("✅ Templates loaded")
 }
 
 func RenderUser(c *gin.Context, tmpl string, data gin.H) {
