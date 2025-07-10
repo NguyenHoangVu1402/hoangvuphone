@@ -7,6 +7,6 @@ import (
 )
 
 // Đăng ký route cho admin dashboard
-func DashboardRoutes(r *gin.RouterGroup) {
-	r.GET("/dashboard", admin.DashboardHandler)
+func RoleRoutes(r *gin.RouterGroup) {
+	r.GET("/role", admin.RoleHandler)
 }

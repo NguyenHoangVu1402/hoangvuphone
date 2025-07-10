@@ -5,10 +5,10 @@ import (
 	"hoangvuphone/internal/render"
 )
 
-func DashboardHandler(c *gin.Context) {
+func RoleHandler(c *gin.Context) {
 	// Render the admin dashboard page
-	render.RenderAdmin(c, "dashboard", gin.H{
-		"title": "Dashboard",
+	render.RenderAdmin(c, "role", gin.H{
+		"title": "Role Management",
 		
 	})
 }

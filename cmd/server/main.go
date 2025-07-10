@@ -5,11 +5,14 @@ import (
 	"hoangvuphone/internal/config"
 	"hoangvuphone/internal/render"
 	"hoangvuphone/internal/routes"
+	"hoangvuphone/internal/migrations"
 )
 
 func main() {
 	// Kết nối database
 	config.ConnectDatabase()
+
+	migrations.MigrateDatabase(config.DB)
 
 	// Tải giao diện templates
 	render.LoadTemplates()
@@ -24,6 +27,7 @@ func main() {
 	// Nhóm route /admin
 	adminGroup := router.Group("/admin")
 	routes.DashboardRoutes(adminGroup)
+	routes.RoleRoutes(adminGroup)
 
 	// Chạy server với port từ config
 	router.Run(":" + config.GetPort())
