@@ -19,7 +19,12 @@
           <div class="card-body p-0 pb-3">
             <div class="d-flex align-items-center justify-content-end my-3">
               <div id="bulk-select-replace-element" class="">
-                <button class="btn btn-falcon-success btn-sm" type="button">
+                <button
+                  class="btn btn-falcon-success btn-sm"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#addModal"
+                >
                   <svg
                     class="svg-inline--fa fa-plus fa-w-14"
                     data-fa-transform="shrink-3 down-2"
@@ -43,13 +48,9 @@
                           transform="translate(-224 -256)"
                         ></path>
                       </g>
-                    </g></svg
-                  ><!-- <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span> Font Awesome fontawesome.com --><span
-                    class="ms-1"
-                    data-bs-toggle="modal"
-                    data-bs-target="#error-modal"
-                    >New</span
-                  >
+                    </g>
+                  </svg>
+                  <span class="ms-1">New</span>
                 </button>
               </div>
               <div class="ms-3 d-none" id="bulk-select-actions">
@@ -141,151 +142,95 @@
   </div>
 </div>
 
-<!-- Modal Add Role -->
-<div
-  class="modal fade"
-  id="add-role-modal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="addRoleModalLabel"
-  aria-hidden="true"
->
-  <div
-    class="modal-dialog modal-dialog-centered"
-    role="document"
-    style="max-width: 500px"
-  >
+<!-- Modal Thêm -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 500px">
     <div class="modal-content position-relative">
-      <div class="position-absolute top-0 end-0 mt-2 me-2 z-1">
+      <div class="modal-header">
+        <h5 class="modal-title">Thêm vai trò</h5>
         <button
           class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
           data-bs-dismiss="modal"
           aria-label="Close"
         ></button>
       </div>
-      <div class="modal-body p-0">
-        <div class="rounded-top-3 py-3 ps-4 pe-6 bg-body-tertiary">
-          <h4 class="mb-1" id="addRoleModalLabel">Add Role</h4>
-        </div>
-        <div class="p-4 pb-0">
-          <form id="add-role-form">
-            <div class="mb-3">
-              <label class="col-form-label" for="role-name">Name:</label>
-              <input
-                class="form-control"
-                id="role-name"
-                type="text"
-                name="name"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label class="col-form-label" for="role-slug">Slug:</label>
-              <input
-                class="form-control"
-                id="role-slug"
-                type="text"
-                name="slug"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label class="col-form-label" for="role-description"
-                >Description:</label
-              >
-              <textarea
-                class="form-control"
-                id="role-description"
-                name="description"
-              ></textarea>
-            </div>
-          </form>
-        </div>
+      <div class="modal-body p-4">
+        <input id="addName" class="form-control mb-2" placeholder="Tên" required />
+        <input id="addSlug" class="form-control mb-2" placeholder="Slug" readonly />
+        <textarea id="addDesc" class="form-control mb-2" placeholder="Mô tả"></textarea>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">
-          Close
-        </button>
-        <button class="btn btn-primary" type="button" onclick="addRole()">
-          Add
-        </button>
+        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Huỷ</button>
+        <button class="btn btn-primary" type="button" onclick="createRole()">Lưu</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Modal Edit Role -->
-<div
-  class="modal fade"
-  id="edit-role-modal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="editRoleModalLabel"
-  aria-hidden="true"
->
-  <div
-    class="modal-dialog modal-dialog-centered"
-    role="document"
-    style="max-width: 500px"
-  >
-    <div class="modal-content position-relative">
-      <div class="position-absolute top-0 end-0 mt-2 me-2 z-1">
-        <button
-          class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+<!-- Modal Sửa -->
+<div class="modal fade" id="editModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>Sửa vai trò</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
       </div>
-      <div class="modal-body p-0">
-        <div class="rounded-top-3 py-3 ps-4 pe-6 bg-body-tertiary">
-          <h4 class="mb-1" id="editRoleModalLabel">Edit Role</h4>
-        </div>
-        <div class="p-4 pb-0">
-          <form id="edit-role-form">
-            <input type="hidden" id="role-id" name="id" />
-            <div class="mb-3">
-              <label class="col-form-label" for="edit-role-name">Name:</label>
-              <input
-                class="form-control"
-                id="edit-role-name"
-                type="text"
-                name="name"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label class="col-form-label" for="edit-role-slug">Slug:</label>
-              <input
-                class="form-control"
-                id="edit-role-slug"
-                type="text"
-                name="slug"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label class="col-form-label" for="edit-role-description"
-                >Description:</label
-              >
-              <textarea
-                class="form-control"
-                id="edit-role-description"
-                name="description"
-              ></textarea>
-            </div>
-          </form>
-        </div>
+      <div class="modal-body">
+        <input type="hidden" id="editID" />
+        <input
+          id="editName"
+          class="form-control mb-2"
+          placeholder="Tên"
+          required
+        />
+        <input
+          id="editSlug"
+          class="form-control mb-2"
+          placeholder="Slug"
+          readonly
+        />
+        <textarea
+          id="editDesc"
+          class="form-control mb-2"
+          placeholder="Mô tả"
+        ></textarea>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">
-          Close
-        </button>
-        <button class="btn btn-primary" type="button" onclick="editRole()">
-          Save
-        </button>
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Huỷ</button>
+        <button class="btn btn-primary" onclick="updateRole()">Cập nhật</button>
       </div>
     </div>
   </div>
 </div>
 
+<!-- JS Tự động tạo slug -->
+<script>
+  document.getElementById("addName").addEventListener("input", function () {
+    const name = this.value;
+    const slug = name
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/đ/g, "d")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+
+    document.getElementById("addSlug").value = slug;
+  });
+
+  document.getElementById("editName").addEventListener("input", function () {
+    const name = this.value;
+    const slug = name
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/đ/g, "d")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+
+    document.getElementById("editSlug").value = slug;
+  });
+</script>
+
+<script src="/web/static/admin/js/actions/role.js"></script>
 {{end}}

@@ -1,14 +1,13 @@
-package admin
+package version1
 
 import (
-	"github.com/gin-gonic/gin"
 	"hoangvuphone/internal/render"
+	"github.com/gin-gonic/gin"
 )
 
-func DashboardHandler(c *gin.Context) {
+func IndexDashboard(c *gin.Context) {
 	// Render the admin dashboard page
 	render.RenderAdmin(c, "dashboard", gin.H{
 		"title": "Dashboard",
-		
 	})
 }
